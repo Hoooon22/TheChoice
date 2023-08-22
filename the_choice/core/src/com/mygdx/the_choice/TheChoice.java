@@ -4,28 +4,52 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.the_choice.map.MapGenerator;
+import com.badlogic.gdx.Gdx;
+
 
 public class TheChoice extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+	private ShapeRenderer shapeRenderer; // ShapeRenderer 객체 추가
+	private MapGenerator mapGenerator; // MapGenerator 객체 추가
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		shapeRenderer = new ShapeRenderer(); // ShapeRenderer 객체 생성
+		mapGenerator = new MapGenerator(); // MapGenerator 객체 생성
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+
+		// Map Generator
+		// 화면을 빨간색으로 지우기
+		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		// ShapeRenderer로 지도 타일 그리기
+		int[][] mapTiles = mapGenerator.getMapTiles();
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		shapeRenderer.setColor(Color.GREEN); // 0인 타일은 녹색으로 그리기
+		for (int row = 0; row < mapTiles.length; row++) {
+			for (int col = 0; col < mapTiles[0].length; col++) {
+				if (mapTiles[row][col] == 0) { // 0인 타일은 녹색으로 그리기
+					shapeRenderer.rect(col * mapGenerator.getTileSize(), row * mapGenerator.getTileSize(), mapGenerator.getTileSize(), mapGenerator.getTileSize());
+				} else { // 1인 타일은 검은색으로 그리기
+					shapeRenderer.setColor(Color.BLACK);
+					shapeRenderer.rect(col * mapGenerator.getTileSize(), row * mapGenerator.getTileSize(), mapGenerator.getTileSize(), mapGenerator.getTileSize());
+					shapeRenderer.setColor(Color.GREEN);
+				}
+			}
+		}
+		shapeRenderer.end();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		shapeRenderer.dispose();
 	}
 }
