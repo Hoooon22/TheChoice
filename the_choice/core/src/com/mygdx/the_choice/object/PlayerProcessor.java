@@ -33,7 +33,6 @@ public class PlayerProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("keyCode : " + keycode);
         switch (keycode){
             case 19:
                 if(player.getPlayerX()<9&&infoMap[player.getPlayerX()+1][player.getPlayerY()]==0){

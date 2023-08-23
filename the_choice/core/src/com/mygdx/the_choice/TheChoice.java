@@ -34,7 +34,6 @@ public class TheChoice extends ApplicationAdapter {
 		Player player = playerProcessor.getPlayer();
 		int playerX = player.getPlayerX();
 		int playerY = player.getPlayerY();
-		System.out.println(playerX + " : " + playerY);
 		
 		// Map Generator
 		// 화면을 빨간색으로 지우기
