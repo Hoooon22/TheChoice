@@ -37,7 +37,7 @@ public class TheChoice extends ApplicationAdapter {
 		
 		// Map Generator
 		// 화면을 빨간색으로 지우기
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// ShapeRenderer로 지도 타일 그리기
