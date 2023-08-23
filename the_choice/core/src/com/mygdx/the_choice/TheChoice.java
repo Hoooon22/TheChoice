@@ -46,16 +46,17 @@ public class TheChoice extends ApplicationAdapter {
 		shapeRenderer.setColor(Color.GREEN); // 0인 타일은 녹색으로 그리기
 		for (int row = 0; row < mapTiles.length; row++) {
 			for (int col = 0; col < mapTiles[0].length; col++) {
+				int weightX = Gdx.graphics.getWidth()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+				int weightY = Gdx.graphics.getHeight()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+
 				if(row==playerX&&col==playerY){
 					shapeRenderer.setColor(Color.BLUE);
-					shapeRenderer.rect(col * mapGenerator.getTileSize(), row * mapGenerator.getTileSize(), mapGenerator.getTileSize(), mapGenerator.getTileSize());
 				} else if (mapTiles[row][col] == 0) { // 0인 타일은 녹색으로 그리기
 					shapeRenderer.setColor(Color.GREEN);
-					shapeRenderer.rect(col * mapGenerator.getTileSize(), row * mapGenerator.getTileSize(), mapGenerator.getTileSize(), mapGenerator.getTileSize());
 				} else { // 1인 타일은 검은색으로 그리기
 					shapeRenderer.setColor(Color.BLACK);
-					shapeRenderer.rect(col * mapGenerator.getTileSize(), row * mapGenerator.getTileSize(), mapGenerator.getTileSize(), mapGenerator.getTileSize());
 				}
+				shapeRenderer.rect(col * mapGenerator.getTileSize() + weightX, row * mapGenerator.getTileSize() + weightY, mapGenerator.getTileSize(), mapGenerator.getTileSize());
 			}
 		}
 		shapeRenderer.end();
