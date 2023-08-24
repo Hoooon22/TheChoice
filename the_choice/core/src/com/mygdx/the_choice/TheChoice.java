@@ -16,12 +16,14 @@ import com.mygdx.the_choice.object.PlayerProcessor;
 public class TheChoice extends ApplicationAdapter {
 	private ShapeRenderer shapeRenderer; // ShapeRenderer 객체 추가
 	private MapGenerator mapGenerator; // MapGenerator 객체 추가
+	private MapGenerator mapGenerator2; // 추후에 다른 유저의 맵 정보
 	private PlayerProcessor playerProcessor; // playerProcessor 객체 추가
 	
 	@Override
 	public void create () {
 		shapeRenderer = new ShapeRenderer(); // ShapeRenderer 객체 생성
 		mapGenerator = new MapGenerator(); // MapGenerator 객체 생성
+		mapGenerator2 = new MapGenerator(); // 추후에 다른 유저의 맵 정보
 		playerProcessor = new PlayerProcessor(mapGenerator.getMapTiles()); // PlayerProcessor 객체 생성
 		Gdx.input.setInputProcessor(playerProcessor);
 	}
@@ -35,6 +37,10 @@ public class TheChoice extends ApplicationAdapter {
 		int playerX = player.getPlayerX();
 		int playerY = player.getPlayerY();
 
+		// 다른 User 위치 가져오기
+		Player player2 = null;
+		int playerX2 = 0;
+		int playerY2 = 0;
 		// Map Generator
 		// 화면을 빨간색으로 지우기
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -42,14 +48,15 @@ public class TheChoice extends ApplicationAdapter {
 
 		// ShapeRenderer로 지도 타일 그리기
 		int[][] mapTiles = mapGenerator.getMapTiles();
+		int[][] mapTiles2 = mapGenerator2.getMapTiles();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setColor(Color.GREEN); // 0인 타일은 녹색으로 그리기
+		int weightX_1 = Gdx.graphics.getWidth()/4 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+		int weightX_2 = Gdx.graphics.getWidth()/4*3 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+		int weightY = Gdx.graphics.getHeight()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+
 		for (int row = 0; row < mapTiles.length; row++) {
 			for (int col = 0; col < mapTiles[0].length; col++) {
-				int weightX_1 = Gdx.graphics.getWidth()/4 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
-				int weightX_2 = Gdx.graphics.getWidth()/4*3 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
-				int weightY = Gdx.graphics.getHeight()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
-
 				if(row==playerX&&col==playerY){
 					shapeRenderer.setColor(Color.BLUE);
 				} else if (mapTiles[row][col] == 0) { // 0인 타일은 녹색으로 그리기
@@ -57,11 +64,23 @@ public class TheChoice extends ApplicationAdapter {
 				} else { // 1인 타일은 검은색으로 그리기
 					shapeRenderer.setColor(Color.BLACK);
 				}
-
 				shapeRenderer.rect(col * mapGenerator.getTileSize() + weightX_1, row * mapGenerator.getTileSize() + weightY, mapGenerator.getTileSize(), mapGenerator.getTileSize());
+			}
+		}
+		for (int row = 0; row < mapTiles2.length; row++) {
+			for (int col = 0; col < mapTiles2[0].length; col++) {
+				if(row==playerX2&&col==playerY2){
+					shapeRenderer.setColor(Color.BLUE);
+				} else if (mapTiles2[row][col] == 0) { // 0인 타일은 녹색으로 그리기
+					shapeRenderer.setColor(Color.GREEN);
+				} else { // 1인 타일은 검은색으로 그리기
+					shapeRenderer.setColor(Color.BLACK);
+				}
 				shapeRenderer.rect(col * mapGenerator.getTileSize() + weightX_2, row * mapGenerator.getTileSize() + weightY, mapGenerator.getTileSize(), mapGenerator.getTileSize());
 			}
 		}
+
+
 		shapeRenderer.end();
 	}
 	
