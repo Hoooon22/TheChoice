@@ -4,6 +4,8 @@ public class Player {
     private int playerX; // 플레이어의 x 좌표
     private int playerY; // 플레이어의 y 좌표
 
+
+
     public Player(int playerX, int playerY) {
         this.playerX = playerX;
         this.playerY = playerY;

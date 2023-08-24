@@ -5,6 +5,11 @@ import com.badlogic.gdx.InputProcessor;
 public class PlayerProcessor implements InputProcessor {
     private int[][] infoMap;
     private Player player;
+    private int pressKeyFrame = 0;
+    private boolean leftMove;
+    private boolean rightMove;
+    private boolean upMove;
+    private boolean downMove;
 
     public PlayerProcessor(int[][] infoMap) {
         this.infoMap = infoMap;
@@ -12,6 +17,7 @@ public class PlayerProcessor implements InputProcessor {
         this.player = new Player(playerLocation[0],playerLocation[1]);
     }
 
+    //플레이어의 초기 위치를 정해주는 함수
     public int[] checkMapToPlayer(int[][] infoMap){
         int[] playerLocation = new int[2];
         for(int i = 0; i < infoMap.length; i++) {
@@ -27,32 +33,64 @@ public class PlayerProcessor implements InputProcessor {
         return playerLocation;
     }
 
+    //getter
     public Player getPlayer() {
         return player;
+    }
+
+    public void updateMotion(){
+        if(leftMove){
+            if(player.getPlayerY()<=0){
+                return;
+            }
+            if(infoMap[player.getPlayerX()][player.getPlayerY()-1]!=0){
+                return;
+            }
+            player.setPlayerY(player.getPlayerY()-1);
+        }
+        if(rightMove){
+            if(player.getPlayerY()>=infoMap[0].length-1){
+                return;
+            }
+            if(infoMap[player.getPlayerX()][player.getPlayerY()+1]!=0){
+                return;
+            }
+            player.setPlayerY(player.getPlayerY()+1);
+        }
+        if(upMove){
+            if(player.getPlayerX()>=infoMap.length-1){
+                return;
+            }
+            if(infoMap[player.getPlayerX()+1][player.getPlayerY()]!=0){
+                return;
+            }
+            player.setPlayerX(player.getPlayerX()+1);
+        }
+        if(downMove){
+            if(player.getPlayerX()<=0){
+                return;
+            }
+            if(infoMap[player.getPlayerX()-1][player.getPlayerY()]!=0){
+                return;
+            }
+            player.setPlayerX(player.getPlayerX()-1);
+        }
     }
 
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode){
             case 19:
-                if(player.getPlayerX()<9&&infoMap[player.getPlayerX()+1][player.getPlayerY()]==0){
-                    player.setPlayerX(player.getPlayerX()+1);
-                }
+                upMove = true;
                 break;
             case 20:
-                if(player.getPlayerX()>0&&infoMap[player.getPlayerX()-1][player.getPlayerY()]==0){
-                    player.setPlayerX(player.getPlayerX()-1);
-                }
+                downMove = true;
                 break;
             case 21:
-                if(player.getPlayerY()>0&&infoMap[player.getPlayerX()][player.getPlayerY()-1]==0){
-                    player.setPlayerY(player.getPlayerY()-1);
-                }
+                leftMove = true;
                 break;
             case 22:
-                if(player.getPlayerY()<9&&infoMap[player.getPlayerX()][player.getPlayerY()+1]==0){
-                    player.setPlayerY(player.getPlayerY()+1);
-                }
+                rightMove = true;
                 break;
         }
         return false;
@@ -60,6 +98,20 @@ public class PlayerProcessor implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case 19:
+                upMove = false;
+                break;
+            case 20:
+                downMove = false;
+                break;
+            case 21:
+                leftMove = false;
+                break;
+            case 22:
+                rightMove = false;
+                break;
+        }
         return false;
     }
 

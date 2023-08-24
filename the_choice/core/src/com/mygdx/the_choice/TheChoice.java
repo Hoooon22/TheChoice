@@ -18,7 +18,7 @@ public class TheChoice extends ApplicationAdapter {
 	private MapGenerator mapGenerator; // MapGenerator 객체 추가
 	private MapGenerator mapGenerator2; // 추후에 다른 유저의 맵 정보
 	private PlayerProcessor playerProcessor; // playerProcessor 객체 추가
-	
+
 	@Override
 	public void create () {
 		shapeRenderer = new ShapeRenderer(); // ShapeRenderer 객체 생성
@@ -47,6 +47,7 @@ public class TheChoice extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// ShapeRenderer로 지도 타일 그리기
+		playerProcessor.updateMotion();
 		int[][] mapTiles = mapGenerator.getMapTiles();
 		int[][] mapTiles2 = mapGenerator2.getMapTiles();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
