@@ -51,8 +51,8 @@ public class TheChoice extends ApplicationAdapter {
 		int[][] mapTiles2 = mapGenerator2.getMapTiles();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setColor(Color.GREEN); // 0인 타일은 녹색으로 그리기
-		int weightX_1 = Gdx.graphics.getWidth()/4 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
-		int weightX_2 = Gdx.graphics.getWidth()/4*3 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+		int weightX_1 = Gdx.graphics.getWidth()/4*3 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+		int weightX_2 = Gdx.graphics.getWidth()/4 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
 		int weightY = Gdx.graphics.getHeight()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
 
 		for (int row = 0; row < mapTiles.length; row++) {
