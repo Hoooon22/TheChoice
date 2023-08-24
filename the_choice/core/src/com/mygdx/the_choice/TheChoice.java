@@ -34,7 +34,7 @@ public class TheChoice extends ApplicationAdapter {
 		Player player = playerProcessor.getPlayer();
 		int playerX = player.getPlayerX();
 		int playerY = player.getPlayerY();
-		
+
 		// Map Generator
 		// 화면을 빨간색으로 지우기
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -46,7 +46,8 @@ public class TheChoice extends ApplicationAdapter {
 		shapeRenderer.setColor(Color.GREEN); // 0인 타일은 녹색으로 그리기
 		for (int row = 0; row < mapTiles.length; row++) {
 			for (int col = 0; col < mapTiles[0].length; col++) {
-				int weightX = Gdx.graphics.getWidth()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+				int weightX_1 = Gdx.graphics.getWidth()/4 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
+				int weightX_2 = Gdx.graphics.getWidth()/4*3 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
 				int weightY = Gdx.graphics.getHeight()/2 - (mapGenerator.getTileSize()*mapTiles[0].length/2);
 
 				if(row==playerX&&col==playerY){
@@ -56,7 +57,9 @@ public class TheChoice extends ApplicationAdapter {
 				} else { // 1인 타일은 검은색으로 그리기
 					shapeRenderer.setColor(Color.BLACK);
 				}
-				shapeRenderer.rect(col * mapGenerator.getTileSize() + weightX, row * mapGenerator.getTileSize() + weightY, mapGenerator.getTileSize(), mapGenerator.getTileSize());
+
+				shapeRenderer.rect(col * mapGenerator.getTileSize() + weightX_1, row * mapGenerator.getTileSize() + weightY, mapGenerator.getTileSize(), mapGenerator.getTileSize());
+				shapeRenderer.rect(col * mapGenerator.getTileSize() + weightX_2, row * mapGenerator.getTileSize() + weightY, mapGenerator.getTileSize(), mapGenerator.getTileSize());
 			}
 		}
 		shapeRenderer.end();
