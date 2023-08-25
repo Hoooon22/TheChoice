@@ -10,6 +10,8 @@ public class PlayerProcessor implements InputProcessor {
     private boolean rightMove;
     private boolean upMove;
     private boolean downMove;
+    private final int moveDelay = 6; // 몇 frame마다 플레이어를 이동을 할지
+    private int countRender = 0;
 
     public PlayerProcessor(int[][] infoMap) {
         this.infoMap = infoMap;
@@ -40,6 +42,10 @@ public class PlayerProcessor implements InputProcessor {
 
     public void updateMotion(){
         if(leftMove){
+            countRender++;
+            if(countRender<moveDelay){
+                return;
+            }
             if(player.getPlayerY()<=0){
                 return;
             }
@@ -47,8 +53,13 @@ public class PlayerProcessor implements InputProcessor {
                 return;
             }
             player.setPlayerY(player.getPlayerY()-1);
+            countRender=0;
         }
         if(rightMove){
+            countRender++;
+            if(countRender<moveDelay){
+                return;
+            }
             if(player.getPlayerY()>=infoMap[0].length-1){
                 return;
             }
@@ -56,8 +67,13 @@ public class PlayerProcessor implements InputProcessor {
                 return;
             }
             player.setPlayerY(player.getPlayerY()+1);
+            countRender=0;
         }
         if(upMove){
+            countRender++;
+            if(countRender<moveDelay){
+                return;
+            }
             if(player.getPlayerX()>=infoMap.length-1){
                 return;
             }
@@ -65,8 +81,13 @@ public class PlayerProcessor implements InputProcessor {
                 return;
             }
             player.setPlayerX(player.getPlayerX()+1);
+            countRender=0;
         }
         if(downMove){
+            countRender++;
+            if(countRender<moveDelay){
+                return;
+            }
             if(player.getPlayerX()<=0){
                 return;
             }
@@ -74,6 +95,7 @@ public class PlayerProcessor implements InputProcessor {
                 return;
             }
             player.setPlayerX(player.getPlayerX()-1);
+            countRender=0;
         }
     }
 
