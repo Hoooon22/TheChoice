@@ -1,5 +1,7 @@
 package com.mygdx.the_choice.WebSocket;
 
-public class GameClient {
+import javax.websocket.*;
 
+public class GameClient {
+    private Session session;
 }
